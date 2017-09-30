@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>INDEX</title>
+</head>
+<body>
+<h1>INDEX</h1>
+<% include navbar.ejs%>
+
+<p>Liste des établissements (<%= etablissements.length%>):</p>
+<ul>
+    <% for(var i = 0; i <etablissements.length; i++){%>
+    <li>
+        <a href="/etablissement/<%= etablissements[i]._id%>">Accéder</a>
+        <p><%= etablissements[i].nom %></p>
+        <p><%= etablissements[i].type %></p>
+    </li>
+    <%}%>
+</ul>
+</body>
+</html>

@@ -1,0 +1,14 @@
+<h2>Ajouter un établissement</h2>
+<% include navbar.ejs%>
+
+<form action="/api/addEtablissement" METHOD="post">
+    <label for="nom"><u>Nom: </u></label>
+    <input type="text" id="nom" name="nom" required>
+    <label for="type"><u>Type: </u></label>
+    <select name="type" id="type" required>
+        <option value="" disabled selected>Selectionner le type</option>>
+        <option value="college">Collège</option>
+        <option value="lycee">Lycée</option>
+    </select>
+    <input type="submit" value="envoyer">
+</form>

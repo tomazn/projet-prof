@@ -1,0 +1,12 @@
+<div>
+  <h1><u>Les établissements:</u></h1>
+  <ul>
+    <li *ngFor="let etablissement of Etablissements">
+      <p>{{etablissement.nom}}</p>
+      <p>{{etablissement.type}}</p>
+    </li>
+    <li *ngIf="Etablissements.length <= 0">
+      <p>Aucun établissement.</p>
+    </li>
+  </ul>
+</div>
