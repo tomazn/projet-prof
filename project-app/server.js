@@ -10,8 +10,8 @@ app.use(express.static(path.join(__dirname, 'dist')));
 
 const port = 8080;
 
-app.use(BodyParser.urlencoded({extended : true}));
-
+app.use(BodyParser.json());
+app.use(BodyParser.urlencoded({ extended: true }));
 
 MongoClient.connect(db.url, function(err,database){
 

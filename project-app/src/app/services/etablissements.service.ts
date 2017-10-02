@@ -4,6 +4,8 @@ import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import {Etablissement} from '../model/etablissement';
+
 
 @Injectable()
 export class EtablissementsService {
@@ -11,7 +13,7 @@ export class EtablissementsService {
 
   }
 
-  GetEtablissements(): Promise<any> {
+  GetEtablissements(): Promise<Etablissement[]> {
     return this.http.get('/api/getEtablissements')
       .map(res => res.json())
       .toPromise()

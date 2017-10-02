@@ -1,0 +1,29 @@
+<div>
+  <h2>Ajouter un établissement</h2>
+  <form [formGroup]="form" (ngSubmit)="submit(form.value, form.valid)">
+
+    <!-- NOM -->
+    <label for="nom"><u>Nom: </u></label>
+    <input type="text" id="nom" name="nom" formControlName="nom" required>
+
+    <!-- TYPE -->
+    <label for="type"><u>Type: </u></label>
+    <select name="type" id="type" formControlName="type" required>
+      <option value="" disabled selected>Selectionner le type</option>>
+      <option value="college">Collège</option>
+      <option value="lycee">Lycée</option>
+    </select>
+
+    <!-- ADRESSE -->
+    <label for="adresse">Adresse</label>
+    <input type="text" id="adresse" name="adresse" formControlName="adresse" required>
+
+    <!-- CODE POSTAL -->
+    <label for="cp">Code postal</label>
+    <input type="text" id="cp" name="cp" formControlName="cp"required>
+
+    <!-- SUBMIT -->
+    <input type="submit" value="Ajouter" [disabled]="!form.valid">
+
+  </form>
+</div>

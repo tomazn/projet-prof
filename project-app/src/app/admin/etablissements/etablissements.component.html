@@ -1,9 +1,13 @@
-<div>
+<app-add-etablissement-form></app-add-etablissement-form>
+
+<div *ngIf="Etablissements">
   <h1><u>Les établissements:</u></h1>
   <ul>
     <li *ngFor="let etablissement of Etablissements">
+      <a routerLink="/Admin/Etablissement/{{etablissement._id}}">Accéder</a>
       <p>{{etablissement.nom}}</p>
       <p>{{etablissement.type}}</p>
+      <button (click)="DeleteEtablissement(etablissement._id)">Supprimer</button>
     </li>
     <li *ngIf="Etablissements.length <= 0">
       <p>Aucun établissement.</p>

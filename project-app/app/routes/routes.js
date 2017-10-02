@@ -36,7 +36,8 @@ module.exports = function(app,db){
                 if(err){
                     res.status(500).send('Une erreur s\'est produite');
                 }else{
-                    res.status(200).send(result);
+                  res.setHeader('Content-Type', 'application/json');
+                  res.status(200).send(result);
                 }
             })
         })
