@@ -1,9 +1,8 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject, Input, Output, EventEmitter} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { EtablissementService} from '../../services/etablissement.service';
-import {EtablissementsService} from '../../services/etablissements.service';
 
 import { Etablissement } from '../../model/etablissement';
 
@@ -15,8 +14,11 @@ import { Etablissement } from '../../model/etablissement';
 export class AddEtablissementFormComponent implements OnInit {
 
   form: FormGroup;
+  @Input('Etablissements') Etablissements: Etablissement[];
+  @Output() EtablissementAdded = new EventEmitter<boolean>();
 
-  constructor(@Inject(FormBuilder) fb: FormBuilder, private _EtablissementService: EtablissementService, private _EtablissementsService: EtablissementsService) {
+
+  constructor(@Inject(FormBuilder) fb: FormBuilder, private _EtablissementService: EtablissementService) {
     this.form = fb.group({
       nom: ['', Validators.compose([Validators.required, Validators.minLength(3)]) ],
       type: ['', Validators.required],
@@ -36,11 +38,8 @@ export class AddEtablissementFormComponent implements OnInit {
     if (!validate) { return; }
     this._EtablissementService.addEtablissement(value)
       .then( () => {
-        this._EtablissementsService.GetEtablissements()
-          .then( );
+        this.EtablissementAdded.emit(true)
       })
       .catch(err => console.log(err));
   }
-
-
 }

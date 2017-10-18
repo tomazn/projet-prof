@@ -12,7 +12,6 @@ export class EtablissementService {
   }
 
   addEtablissement(etablissement) {
-    console.log(etablissement);
      return this.http.post('/api/addEtablissement', etablissement )
        .toPromise()
        .then()

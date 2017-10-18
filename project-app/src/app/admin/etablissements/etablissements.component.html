@@ -1,4 +1,4 @@
-<app-add-etablissement-form></app-add-etablissement-form>
+<app-add-etablissement-form (EtablissementAdded)="EtablissementAdded($event)"></app-add-etablissement-form>
 
 <div *ngIf="Etablissements">
   <h1><u>Les établissements:</u></h1>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 
 import { Etablissement } from '../../model/etablissement';
 
@@ -12,7 +12,7 @@ import { EtablissementService} from '../../services/etablissement.service';
 })
 export class EtablissementsComponent implements OnInit {
 
-   Etablissements: Etablissement[] = [];
+  Etablissements: Etablissement[];
 
   constructor(private _EtablissementsService: EtablissementsService, private _EtablissementService: EtablissementService) { }
 
@@ -32,4 +32,10 @@ export class EtablissementsComponent implements OnInit {
     this.GetEtablissements();
   }
 
+
+  EtablissementAdded(e: boolean): void {
+    if (e) {
+      this.GetEtablissements();
+    }
+  }
 }
