@@ -1,0 +1,14 @@
+<div>
+<h2>Ajouter une matière</h2>
+  <form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="submit(form.value,form.valid)">
+    <!-- INTUTILE -->
+    <label for="intitule">Intitulé</label>
+    <input type="text" id="intitule" name="intitule" formControlName="intitule" required>
+    <!-- FILE -->
+    <label for="logo">Logo</label>
+    <input type="file" id="logo" name="logo" accept="image/*" (change)="onFileChange($event)" formControlName="logo" required>
+
+    <!-- SUBMIT -->
+    <input type="submit" value="Ajouter">
+  </form>
+</div>

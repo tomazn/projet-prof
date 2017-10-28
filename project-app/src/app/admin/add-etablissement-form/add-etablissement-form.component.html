@@ -19,9 +19,17 @@
     <input type="text" id="adresse" name="adresse" formControlName="adresse" required>
 
     <!-- CODE POSTAL -->
-    <label for="cp">Code postal</label>
-    <input type="text" id="cp" name="cp" formControlName="cp" required>
+    <div>
+      <label for="cp">Code postal</label>
+      <input [ngClass]="cp.valid ? 'validate':''" type="text" id="cp" name="cp" formControlName="cp" required>
 
+      <div *ngIf="cp.invalid && (cp.dirty || cp.touched)" class="alert alert-danger">
+        <p *ngIf="cp.errors.required">Champs requis.</p>
+        <p *ngIf="!cp.errors.pattern && cp.errors.minlength">Trop court.</p>
+        <p *ngIf="!cp.errors.pattern && cp.errors.maxlength">Trop long.</p>
+        <p *ngIf="cp.errors.pattern">Mauvais format, le code postal doit être une suite de chiffre.</p>
+      </div>
+    </div>
     <!-- SUBMIT -->
     <input type="submit" value="Ajouter" [disabled]="!form.valid">
 

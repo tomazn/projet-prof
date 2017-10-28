@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import {Etablissement} from '../../model/etablissement';
 
-import { EtablissementService } from '../../services/etablissement.service';
+import { EtablissementsService } from '../../services/etablissements.service';
 
 @Component({
   selector: 'app-etablissement',
@@ -14,11 +14,11 @@ export class EtablissementComponent implements OnInit {
 
   private Etablissement: Etablissement = null
 
-  constructor(private _EtablissementService: EtablissementService, private Route: ActivatedRoute) { }
+  constructor(private _EtablissementsService: EtablissementsService, private Route: ActivatedRoute) { }
 
   ngOnInit() {
     const id =  this.Route.snapshot.params['id'];
-    this._EtablissementService.GetEtablissement(id).then(
+    this._EtablissementsService.GetEtablissement(id).then(
       data => this.Etablissement = data,
       error => console.log(error),
     );

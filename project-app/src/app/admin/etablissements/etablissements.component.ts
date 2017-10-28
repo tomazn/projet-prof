@@ -3,7 +3,6 @@ import { Component, OnInit} from '@angular/core';
 import { Etablissement } from '../../model/etablissement';
 
 import { EtablissementsService } from '../../services/etablissements.service';
-import { EtablissementService} from '../../services/etablissement.service';
 
 @Component({
   selector: 'app-etablissements',
@@ -14,7 +13,7 @@ export class EtablissementsComponent implements OnInit {
 
   Etablissements: Etablissement[];
 
-  constructor(private _EtablissementsService: EtablissementsService, private _EtablissementService: EtablissementService) { }
+  constructor(private _EtablissementsService: EtablissementsService) { }
 
   ngOnInit() {
     this.GetEtablissements();
@@ -28,7 +27,7 @@ export class EtablissementsComponent implements OnInit {
   }
 
    DeleteEtablissement(id): void {
-    this._EtablissementService.DeleteEtablissement(id);
+    this._EtablissementsService.DeleteEtablissement(id);
     this.GetEtablissements();
   }
 

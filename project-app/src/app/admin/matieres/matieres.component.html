@@ -1,0 +1,12 @@
+<app-add-matiere-form></app-add-matiere-form>
+<div>
+  <h2>Matières</h2>
+  <ul *ngIf="Matieres">
+    <li *ngFor="let matiere of Matieres">
+        <p>{{matiere.intitule}}</p>
+    </li>
+    <li *ngIf="Matieres.length <= 0">
+        <p>Aucune matière existante.</p>
+    </li>
+  </ul>
+</div>
