@@ -4,6 +4,7 @@ import { Etablissement } from '../../model/etablissement';
 
 import { EtablissementsService } from '../../services/etablissements.service';
 
+
 @Component({
   selector: 'app-etablissements',
   templateUrl: './etablissements.component.html',

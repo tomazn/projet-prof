@@ -22,4 +22,14 @@ export class MatieresComponent implements OnInit {
       .catch( err => console.log(err));
   }
 
+  DeleteMatiere(id): void {
+    this._MatiereService.DeleteMatiere(id);
+    this.GetMatieres();
+  }
+
+  MatiereAdded(e: boolean): void {
+    if (e) {
+      this.GetMatieres();
+    }
+  }
 }

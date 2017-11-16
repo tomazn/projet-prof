@@ -1,9 +1,11 @@
-<app-add-matiere-form></app-add-matiere-form>
+<app-add-matiere-form (MatiereAdded)="MatiereAdded($event)"></app-add-matiere-form>
 <div>
   <h2>Matières</h2>
   <ul *ngIf="Matieres">
     <li *ngFor="let matiere of Matieres">
         <p>{{matiere.intitule}}</p>
+        <img src="{{matiere.logo}}" alt="">
+      <button (click)="DeleteMatiere(matiere._id)">Supprimer</button>
     </li>
     <li *ngIf="Matieres.length <= 0">
         <p>Aucune matière existante.</p>

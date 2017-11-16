@@ -19,11 +19,18 @@ export class MatieresService {
       .catch(this.handleError);
   }
 
-  addMatiere(matiere) {
+  AddMatiere(matiere) {
     const formData: FormData = new FormData();
     formData.append('logo', matiere.logo);
     formData.append ('intitule', matiere.intitule);
     return this.http.post('/api/addMatiere', formData)
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
+
+  DeleteMatiere(id) {
+    return this.http.delete('/api/deleteMAtiere/' + id)
       .toPromise()
       .then()
       .catch(this.handleError);

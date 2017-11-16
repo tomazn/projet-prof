@@ -2,16 +2,18 @@ var ObjectID = require('mongodb').ObjectID;
 const multer = require('multer');
 const path = require('path');
 
-var storage = multer.diskStorage(
+
+const pathMatiereLogo = '/uploads/matiere/logo/';
+var storageMatiere = multer.diskStorage(
   {
-    destination: path.join(__dirname, '../../dist/uploads/img'),
+    destination: path.join(__dirname, '../../dist' + pathMatiereLogo),
     filename: function ( req, file, cb ) {
       cb( null, file.originalname);
     }
   }
 );
 
-const upload = multer({ storage: storage });
+const uploadMatiere = multer({ storage: storageMatiere });
 
 module.exports = function(app,db){
 
@@ -82,10 +84,10 @@ module.exports = function(app,db){
         /*
       * API MATIERE : ADD
       */
-    .post('/api/addMatiere',upload.single('logo'), function(req,res){
-      console.log(req.file);
+    .post('/api/addMatiere',uploadMatiere.single('logo'), function(req,res){
       if(!req.file){ res.status(500).send("Aucune image."); return; }
-      req.body.name = req.file.originalname;
+      req.body.logoName = req.file.originalname;
+      req.body.logo = pathMatiereLogo + req.file.originalname;
       db.collection('matieres').insert(req.body, function(err,result){
         if(err){
           res.status(500).send("Une erreur s\'est produite");
@@ -95,7 +97,7 @@ module.exports = function(app,db){
       })
     })
 
-  /*
+    /*
      * API MATIERE : GET
      */
     .get('/api/getMAtieres',function(req,res){
@@ -108,4 +110,19 @@ module.exports = function(app,db){
       }
     })
   })
+    /*
+       * API MATIERE : DELETE
+       */
+    .delete('/api/deleteMAtiere/:id',function(req,res){
+      const id = req.params.id;
+      const _ObjectID = {'_id': new ObjectID(id) }
+      db.collection('matieres').remove(_ObjectID, function(err){
+        if(err){
+          res.status(500).send("Une erreur s\'est produite");
+        }else{
+          res.header("Content-Type", "text/html; charset=utf-8");
+          res.status(200).send("La matiere :" + id + "a été supprimé.");
+        }
+      })
+    })
 };

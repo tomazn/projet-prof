@@ -11,7 +11,8 @@ import {MatieresService} from '../../services/matieres.service';
 export class AddMatiereFormComponent implements OnInit {
 
   form: FormGroup;
-  file2Upload: File;
+  file2Upload: File = null;
+  @Output() MatiereAdded = new EventEmitter<boolean>();
 
   constructor(@Inject(FormBuilder) fb: FormBuilder, private _MatieresService: MatieresService) {
     this.form = fb.group({
@@ -23,15 +24,19 @@ export class AddMatiereFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  get intitule() { return this.form.get('intitule'); }
+
   onFileChange($event) {
     this.file2Upload = $event.target.files[0];
   }
 
-  submit(value, validate): void {
+  submit(value): void {
+    if (!this.intitule || !this.file2Upload) { return; }
     value.logo = this.file2Upload;
-   this._MatieresService.addMatiere(value)
+   this._MatieresService.AddMatiere(value)
      .then( () => {
-        console.log('ajouté');
+       this.MatiereAdded.emit(true);
+        this.form.reset();
        })
      .catch(err => console.log(err));
   }

@@ -1,6 +1,6 @@
 <div>
 <h2>Ajouter une matière</h2>
-  <form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="submit(form.value,form.valid)">
+  <form [formGroup]="form" enctype="multipart/form-data" (ngSubmit)="submit(form.value)">
     <!-- INTUTILE -->
     <label for="intitule">Intitulé</label>
     <input type="text" id="intitule" name="intitule" formControlName="intitule" required>
