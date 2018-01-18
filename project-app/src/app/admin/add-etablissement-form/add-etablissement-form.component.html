@@ -1,5 +1,5 @@
-<div>
-  <h2>Ajouter un établissement</h2>
+<div *ngIf="form">
+  <h2>{{Edit ? 'Modifier l\'établissement' : 'Ajouter un établissement'}}</h2>
   <form [formGroup]="form" (ngSubmit)="submit(form.value, form.valid)">
 
     <!-- NOM -->
@@ -31,7 +31,7 @@
       </div>
     </div>
     <!-- SUBMIT -->
-    <input type="submit" value="Ajouter" [disabled]="!form.valid">
+    <input type="submit" value="{{Edit ? 'Modifer': 'Ajouter' }}" [disabled]="!form.valid">
 
   </form>
 </div>

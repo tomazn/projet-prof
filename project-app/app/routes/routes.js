@@ -76,7 +76,22 @@ module.exports = function(app,db){
                 }
             })
         })
-
+        /*
+    * API ETABLISSEMENT : PUT
+     */
+    .put('/api/editEtablissement/:id',function(req,res){
+      const id = req.params.id;
+      const _ObjectId = {'_id': new ObjectID(id)};
+      const etablissement = { 'nom': req.body.nom, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
+      db.collection('etablissements').update(_ObjectId, etablissement, function(err,result){
+        if(err){
+          res.status(500).send('Une erreur s\'est produite');
+        }else{
+          res.setHeader('Content-Type', 'application/json');
+          res.status(200).send("L'établissement :" + id + "a été modifié.");
+        }
+      })
+    })
           /*
           *  ################### MATIERE ###################
           * */

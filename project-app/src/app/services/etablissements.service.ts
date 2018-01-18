@@ -27,6 +27,13 @@ export class EtablissementsService {
       .catch(this.handleError);
   }
 
+  editEtablissement(id, etablissement) {
+    return this.http.put('/api/editEtablissement/' + id, etablissement)
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+  }
+
   GetEtablissement(id): Promise<Etablissement> {
     return this.http.get('/api/getEtablissement/' + id)
       .map(res => res.json())
