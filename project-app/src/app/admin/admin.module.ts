@@ -14,6 +14,7 @@ import { EtablissementsService } from '../services/etablissements.service';
 import { MatieresService} from '../services/matieres.service';
 
 import {AdminRoutingModule} from './admin-routing.module';
+import { ProfesseurComponent } from './professeur/professeur.component';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import {AdminRoutingModule} from './admin-routing.module';
     EtablissementComponent,
     AddEtablissementFormComponent,
     MatieresComponent,
-    AddMatiereFormComponent
+    AddMatiereFormComponent,
+    ProfesseurComponent
   ],
   providers: [
     EtablissementsService,
