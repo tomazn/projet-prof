@@ -1,143 +1,38 @@
-var ObjectID = require('mongodb').ObjectID;
+"use strict";
+
 const multer = require('multer');
 const path = require('path');
-
 
 const pathMatiereLogo = '/uploads/matiere/logo/';
 var storageMatiere = multer.diskStorage(
   {
     destination: path.join(__dirname, '../../dist' + pathMatiereLogo),
-    filename: function ( req, file, cb ) {
-      cb( null, file.originalname);
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
     }
   }
 );
 
-const uploadMatiere = multer({ storage: storageMatiere });
+const uploadMatiere = multer({storage: storageMatiere});
 
-module.exports = function(app,db){
+module.exports = function (app, db) {
+
+  const etablissementController = require('../controller/etablissementController')(db);
+  const matiereController = require('../controller/matierecontroller')(db);
 
   /*
   *  ################### ETABLISSEMENTS ###################
-  * */
-       /*
-        * API ETABLISSEMENTS : GET
-        * return list of all etablissement in json
-        */
-  app.get('/api/getEtablissements',function(req,res){
-    db.collection('etablissements').find().toArray(function(err,result){
-      if(err){
-        res.status(500).send('Une erreur s\'est produite');
-      }else{
-        res.setHeader('Content-Type', 'application/json');
-        res.status(200).send(result);
-      }
-    })
-  })
-        /*
-         * API ETABLISSEMENT : ADD
-         */
-        .post('/api/addEtablissement',function(req,res){
-            db.collection('etablissements').insert(req.body , function(err,result){
-                if(err){
-                    res.status(500).send('Une erreur s\'est produite');
-                }else{
-                    res.status(200).send(result.ops[0]);
-                }
-            })
-        })
-        /*
-         * API ETABLISSEMENT : GET
-         */
-        .get('/api/getEtablissement/:id',function(req,res){
-            const id = req.params.id;
-            const _ObjectId = {'_id': new ObjectID(id)};
-            db.collection('etablissements').findOne(_ObjectId, function(err,result){
-                if(err){
-                    res.status(500).send('Une erreur s\'est produite');
-                }else{
-                  res.setHeader('Content-Type', 'application/json');
-                  res.status(200).send(result);
-                }
-            })
-        })
-        /*
-     * API ETABLISSEMENT : DELETE
-     */
-        .delete('/api/deleteEtablissement/:id',function(req,res){
-            const id = req.params.id;
-            const _ObjectId = {'_id': new ObjectID(id)};
-            db.collection('etablissements').remove(_ObjectId, function(err,result){
-                if(err){
-                    res.status(500).send('Une erreur s\'est produite');
-                }else{
-                    res.header("Content-Type", "text/html; charset=utf-8");
-                    res.status(200).send("L'établissement :" + id + "a été supprimé.");
-                }
-            })
-        })
-        /*
-    * API ETABLISSEMENT : PUT
-     */
-    .put('/api/editEtablissement/:id',function(req,res){
-      const id = req.params.id;
-      const _ObjectId = {'_id': new ObjectID(id)};
-      const etablissement = { 'nom': req.body.nom, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
-      db.collection('etablissements').update(_ObjectId, etablissement, function(err,result){
-        if(err){
-          res.status(500).send('Une erreur s\'est produite');
-        }else{
-          res.setHeader('Content-Type', 'application/json');
-          res.status(200).send("L'établissement :" + id + "a été modifié.");
-        }
-      })
-    })
-          /*
-          *  ################### MATIERE ###################
-          * */
+  */
+  app.get('/api/getEtablissements', etablissementController.getEtablissements);
+  app.get('/api/getEtablissement/:id', etablissementController.getEtablissement);
+  app.post('/api/addEtablissement', etablissementController.addEtablissement);
+  app.delete('/api/deleteEtablissement/:id', etablissementController.deleteEtablissement);
+  app.put('/api/editEtablissement/:id', etablissementController.editEtablissement);
 
-        /*
-      * API MATIERE : ADD
-      */
-    .post('/api/addMatiere',uploadMatiere.single('logo'), function(req,res){
-      if(!req.file){ res.status(500).send("Aucune image."); return; }
-      req.body.logoName = req.file.originalname;
-      req.body.logo = pathMatiereLogo + req.file.originalname;
-      db.collection('matieres').insert(req.body, function(err,result){
-        if(err){
-          res.status(500).send("Une erreur s\'est produite");
-        }else{
-            res.status(200).send(result.ops[0]);
-        }
-      })
-    })
-
-    /*
-     * API MATIERE : GET
-     */
-    .get('/api/getMAtieres',function(req,res){
-    db.collection('matieres').find().toArray(function(err,result){
-      if(err){
-        res.status(500).send("Une erreur s\'est produite");
-      }else{
-        res.setHeader('Content-Type','application/json');
-        res.status(200).send(result);
-      }
-    })
-  })
-    /*
-       * API MATIERE : DELETE
-       */
-    .delete('/api/deleteMAtiere/:id',function(req,res){
-      const id = req.params.id;
-      const _ObjectID = {'_id': new ObjectID(id) }
-      db.collection('matieres').remove(_ObjectID, function(err){
-        if(err){
-          res.status(500).send("Une erreur s\'est produite");
-        }else{
-          res.header("Content-Type", "text/html; charset=utf-8");
-          res.status(200).send("La matiere :" + id + "a été supprimé.");
-        }
-      })
-    })
+  /*
+   *  ################### MATIERE ###################
+   */
+  app.post('/api/addMatiere', uploadMatiere.single('logo'), matiereController.addMatiere);
+  app.get('/api/getMAtieres', matiereController.getMatiere);
+  app.delete('/api/deleteMAtiere/:id', matiereController.deleteMatiere);
 };
