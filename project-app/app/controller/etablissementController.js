@@ -1,6 +1,7 @@
 "use strict";
 
 const ObjectID = require('mongodb').ObjectID;
+const etablissementModel = require('../Model/etablissementModel');
 
 module.exports = function (db) {
 
@@ -10,6 +11,15 @@ module.exports = function (db) {
    * return list of all etablissement in json
    */
     getEtablissements: function (req, res) {
+      etablissementModel.find(null, function(err,result){
+        if (err) {
+          res.status(500).send('Une erreur s\'est produite');
+        } else {
+          res.setHeader('Content-Type', 'application/json');
+          res.status(200).send(result);
+        }
+      });
+/*
       db.collection('etablissements').find().toArray(function (err, result) {
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
@@ -18,6 +28,7 @@ module.exports = function (db) {
           res.status(200).send(result);
         }
       });
+*/
     },
     /*
    * API ETABLISSEMENT : GET
@@ -26,7 +37,7 @@ module.exports = function (db) {
     getEtablissement: function (req, res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      db.collection('etablissements').findOne(_ObjectId, function (err, result) {
+      etablissementModel.findOne(_ObjectId, function(err,result){
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
