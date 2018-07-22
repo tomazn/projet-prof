@@ -52,17 +52,16 @@ module.exports = function (db) {
      */
     addEtablissement: function (req, res) {
       let _etablissementModel = new etablissementModel();
-      _etablissementModel.name = req.body.nom;
+      _etablissementModel.name = req.body.name;
       _etablissementModel.adresse = req.body.adresse;
       _etablissementModel.cp = req.body.cp;
       _etablissementModel.type = req.body.type;
-      console.log(_etablissementModel);
       _etablissementModel.save(function (err, result) {
         if (err) {
           console.log(err);
           res.status(500).send('Une erreur s\'est produite');
         } else {
-          res.status(200).send(result.ops[0]);
+          res.status(200).send("Etablissement ajouté avec succès");
         }
       });
     },
