@@ -20,16 +20,6 @@ module.exports = function (db) {
           res.status(200).send(result);
         }
       });
-/*
-      db.collection('etablissements').find().toArray(function (err, result) {
-        if (err) {
-          res.status(500).send('Une erreur s\'est produite');
-        } else {
-          res.setHeader('Content-Type', 'application/json');
-          res.status(200).send(result);
-        }
-      });
-*/
     },
     /*
    * API ETABLISSEMENT : GET
@@ -58,7 +48,6 @@ module.exports = function (db) {
       _etablissementModel.type = req.body.type;
       _etablissementModel.save(function (err, result) {
         if (err) {
-          console.log(err);
           res.status(500).send('Une erreur s\'est produite');
         } else {
           res.status(200).send("Etablissement ajouté avec succès");
@@ -71,7 +60,7 @@ module.exports = function (db) {
     deleteEtablissement: function (req, res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      db.collection('etablissements').remove(_ObjectId, function (err, result) {
+      etablissementModel.remove(_ObjectId, function (err, result) {
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
@@ -86,9 +75,12 @@ module.exports = function (db) {
     editEtablissement: function(req,res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      const etablissement = { 'nom': req.body.nom, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
-      db.collection('etablissements').update(_ObjectId, etablissement, function(err,result){
+
+      const etablissement = { 'name': req.body.name, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
+
+      etablissementModel.update(_ObjectId, etablissement, function(err,result){
         if(err){
+          console.log(err);
           res.status(500).send('Une erreur s\'est produite');
         }else{
           res.setHeader('Content-Type', 'application/json');
