@@ -2,8 +2,8 @@
 
 
 const pathMatiereLogo = '/uploads/matiere/logo/';
-
 const ObjectID = require('mongodb').ObjectID;
+const matiereModel = require('../Model/matiereModel');
 
 module.exports = function (db) {
   return {
@@ -15,13 +15,15 @@ module.exports = function (db) {
         res.status(500).send("Aucune image.");
         return;
       }
-      req.body.logoName = req.file.originalname;
-      req.body.logo = pathMatiereLogo + req.file.originalname;
-      db.collection('matieres').insert(req.body, function (err, result) {
+      let _matiereModel = new matiereModel();
+      _matiereModel.intitule = req.body.intitule;
+      _matiereModel.logoName = req.file.originalname;
+      _matiereModel.logo = pathMatiereLogo + req.file.originalname;
+      _matiereModel.save(function (err, result) {
         if (err) {
           res.status(500).send("Une erreur s\'est produite");
         } else {
-          res.status(200).send(result.ops[0]);
+          res.status(200).send(result);
         }
       });
     },
@@ -29,7 +31,7 @@ module.exports = function (db) {
     * API MATIERE : GET
     */
     getMatiere: function (req, res) {
-      db.collection('matieres').find().toArray(function (err, result) {
+      matiereModel.find(null, function (err, result) {
         if (err) {
           res.status(500).send("Une erreur s\'est produite");
         } else {
@@ -44,7 +46,7 @@ module.exports = function (db) {
     deleteMatiere: function (req, res) {
       const id = req.params.id;
       const _ObjectID = {'_id': new ObjectID(id)}
-      db.collection('matieres').remove(_ObjectID, function (err) {
+      matiereModel.remove(_ObjectID, function (err) {
         if (err) {
           res.status(500).send("Une erreur s\'est produite");
         } else {
