@@ -15,6 +15,7 @@ import { MatieresService} from '../services/matieres.service';
 
 import {AdminRoutingModule} from './admin-routing.module';
 import { ProfesseurComponent } from './professeur/professeur.component';
+import { AddProfesseurFormComponent } from './add-professeur-form/add-professeur-form.component';
 
 @NgModule({
   imports: [
@@ -30,7 +31,8 @@ import { ProfesseurComponent } from './professeur/professeur.component';
     AddEtablissementFormComponent,
     MatieresComponent,
     AddMatiereFormComponent,
-    ProfesseurComponent
+    ProfesseurComponent,
+    AddProfesseurFormComponent
   ],
   providers: [
     EtablissementsService,
