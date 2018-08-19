@@ -12,10 +12,10 @@ module.exports = function (db) {
      */
     addProfesseur: function (req, res) {
       let _professeurModel = new professeurModel();
-      _professeurModel.nom = req.body.name;
-      _professeurModel.prenom = req.body.adresse;
-      _professeurModel.etablissementId = req.body.etablissementId;
-      _professeurModel.matiereId = req.body.matiereId;
+      _professeurModel.nom = req.body.nom;
+      _professeurModel.prenom = req.body.prenom;
+      _professeurModel.etablissement = req.body.etablissement._id;
+      _professeurModel.matiere = req.body.matiere._id;
       _professeurModel.save(function (err, result) {
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
@@ -23,7 +23,38 @@ module.exports = function (db) {
           res.status(200).send("Professeur ajouté avec succès");
         }
       });
-    }
+    },
+        /*
+     * API PROFESSEUR : GET
+     */
+    getProfesseurs: function (req, res) {
+      professeurModel.find(null)
+      .populate("etablissement", "name")
+      .populate("matiere", "intitule")
+      .exec((err, result) => {
+        if(err){
+          res.status(500).send('Une erreur s\'est produite');
+        }else{
+          res.setHeader('Content-Type', 'application/json');
+          res.status(200).send(result);
+        }
+      });
+    },
+      /*
+    * API PROFESSEUR : DELETE
+    */
+   deleteProfesseur: function (req, res) {
+    const id = req.params.id;
+    const _ObjectID = {'_id': new ObjectID(id)}
+    professeurModel.remove(_ObjectID, function (err) {
+      if (err) {
+        res.status(500).send("Une erreur s\'est produite");
+      } else {
+        res.header("Content-Type", "text/html; charset=utf-8");
+        res.status(200).send("Le professeur :" + id + "a été supprimé.");
+      }
+    });
+  }
   };
 
 };

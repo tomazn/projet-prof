@@ -1,3 +1,31 @@
-<p>
-  add-professeur-form works!
-</p>
+<div *ngIf="form">
+  <h2>Ajouter un professeur</h2>
+  <form [formGroup]="form" (ngSubmit)="submit(form.value, form.valid)">
+
+    <!-- NOM -->
+    <label for="nom"><u>Nom: </u></label>
+    <input type="text" id="nom" name="nom" formControlName="nom" required>
+
+    <!-- PRENOM -->
+    <label for="prenom"><u>Prenom: </u></label>
+    <input type="text" id="prenom" name="prenom" formControlName="prenom" required>
+
+    <!-- Etablissement -->
+    <label for="etablissement"><u>Etablissement: </u></label>
+    <select name="etablissement" id="etablissement" formControlName="etablissement" required>
+      <option value="" disabled selected>Selectionner l'établissement</option>>
+      <option *ngFor="let etablissement of etablissements" [ngValue]="etablissement">{{etablissement.name}}</option>
+    </select>
+
+   <!-- Matiere -->
+   <label for="matiere"><u>Matiere: </u></label>
+   <select name="matiere" id="matiere" formControlName="matiere" required>
+     <option value="" disabled selected>Selectionner la matière</option>>
+     <option *ngFor="let matiere of matieres" [ngValue]="matiere">{{matiere.intitule}}</option>
+   </select>
+
+    <!-- SUBMIT -->
+    <input type="submit" value="Ajouter" [disabled]="!form.valid">
+
+  </form>
+</div>

@@ -41,4 +41,6 @@ module.exports = function (app, db) {
   *  ################### PROFESSEURS ###################
   */
   app.post('/api/addProfesseur', professeurController.addProfesseur);
+  app.get('/api/getProfesseurs', professeurController.getProfesseurs);
+  app.delete('/api/deleteProfesseur/:id', professeurController.deleteProfesseur);
 };
