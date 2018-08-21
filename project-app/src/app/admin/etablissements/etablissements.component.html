@@ -6,7 +6,7 @@
     <li *ngFor="let etablissement of Etablissements">
       <a routerLink="/Admin/Etablissement/{{etablissement._id}}">Accéder</a>
       <a routerLink="/Admin/Edit/etablissement/{{etablissement._id}}">Modifier</a>
-      <p>{{etablissement.nom}}</p>
+      <p>{{etablissement.name}}</p>
       <p>{{etablissement.type}}</p>
       <button (click)="DeleteEtablissement(etablissement._id)">Supprimer</button>
     </li>

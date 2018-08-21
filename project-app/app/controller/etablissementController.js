@@ -1,6 +1,8 @@
 "use strict";
 
+const mongoose = require('mongoose');
 const ObjectID = require('mongodb').ObjectID;
+const etablissementModel = require('../Model/etablissementModel');
 
 module.exports = function (db) {
 
@@ -10,7 +12,7 @@ module.exports = function (db) {
    * return list of all etablissement in json
    */
     getEtablissements: function (req, res) {
-      db.collection('etablissements').find().toArray(function (err, result) {
+      etablissementModel.find(null, function(err,result){
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
@@ -26,7 +28,7 @@ module.exports = function (db) {
     getEtablissement: function (req, res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      db.collection('etablissements').findOne(_ObjectId, function (err, result) {
+      etablissementModel.findOne(_ObjectId, function(err,result){
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
@@ -39,11 +41,16 @@ module.exports = function (db) {
      * API ETABLISSEMENT : ADD
      */
     addEtablissement: function (req, res) {
-      db.collection('etablissements').insert(req.body, function (err, result) {
+      let _etablissementModel = new etablissementModel();
+      _etablissementModel.name = req.body.name;
+      _etablissementModel.adresse = req.body.adresse;
+      _etablissementModel.cp = req.body.cp;
+      _etablissementModel.type = req.body.type;
+      _etablissementModel.save(function (err, result) {
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
-          res.status(200).send(result.ops[0]);
+          res.status(200).send("Etablissement ajouté avec succès");
         }
       });
     },
@@ -53,7 +60,7 @@ module.exports = function (db) {
     deleteEtablissement: function (req, res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      db.collection('etablissements').remove(_ObjectId, function (err, result) {
+      etablissementModel.remove(_ObjectId, function (err, result) {
         if (err) {
           res.status(500).send('Une erreur s\'est produite');
         } else {
@@ -68,9 +75,12 @@ module.exports = function (db) {
     editEtablissement: function(req,res) {
       const id = req.params.id;
       const _ObjectId = {'_id': new ObjectID(id)};
-      const etablissement = { 'nom': req.body.nom, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
-      db.collection('etablissements').update(_ObjectId, etablissement, function(err,result){
+
+      const etablissement = { 'name': req.body.name, 'type': req.body.type, 'adresse': req.body.adresse, 'cp': req.body.cp };
+
+      etablissementModel.update(_ObjectId, etablissement, function(err,result){
         if(err){
+          console.log(err);
           res.status(500).send('Une erreur s\'est produite');
         }else{
           res.setHeader('Content-Type', 'application/json');

@@ -3,15 +3,15 @@
   <form [formGroup]="form" (ngSubmit)="submit(form.value, form.valid)">
 
     <!-- NOM -->
-    <label for="nom"><u>Nom: </u></label>
-    <input type="text" id="nom" name="nom" formControlName="nom" required>
+    <label for="name"><u>Nom: </u></label>
+    <input type="text" id="name" name="name" formControlName="name" required>
 
     <!-- TYPE -->
     <label for="type"><u>Type: </u></label>
     <select name="type" id="type" formControlName="type" required>
       <option value="" disabled selected>Selectionner le type</option>>
-      <option value="college">Collège</option>
-      <option value="lycee">Lycée</option>
+      <option value="Collège">Collège</option>
+      <option value="Lycée">Lycée</option>
     </select>
 
     <!-- ADRESSE -->

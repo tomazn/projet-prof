@@ -1,5 +1,5 @@
 const express = require('express');
-const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const BodyParser = require('body-parser');
 const db = require('./config/db');
 const path = require('path');
@@ -13,7 +13,7 @@ const port = 8080;
 app.use(BodyParser.json());
 app.use(BodyParser.urlencoded({ extended: true }));
 
-MongoClient.connect(db.url, function(err,database){
+mongoose.connect(db.url, function(err,database){
 
     if(err) return console.log(err);
     require('./app/routes')(app,database);

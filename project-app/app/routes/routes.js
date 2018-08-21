@@ -19,6 +19,7 @@ module.exports = function (app, db) {
 
   const etablissementController = require('../controller/etablissementController')(db);
   const matiereController = require('../controller/matierecontroller')(db);
+  const professeurController = require('../controller/professeurController')(db);
 
   /*
   *  ################### ETABLISSEMENTS ###################
@@ -30,9 +31,18 @@ module.exports = function (app, db) {
   app.put('/api/editEtablissement/:id', etablissementController.editEtablissement);
 
   /*
-   *  ################### MATIERE ###################
+   *  ################### MATIERES ###################
    */
   app.post('/api/addMatiere', uploadMatiere.single('logo'), matiereController.addMatiere);
   app.get('/api/getMAtieres', matiereController.getMatiere);
   app.delete('/api/deleteMAtiere/:id', matiereController.deleteMatiere);
+
+    /*
+  *  ################### PROFESSEURS ###################
+  */
+  app.post('/api/addProfesseur', professeurController.addProfesseur);
+  app.get('/api/getProfesseurs', professeurController.getProfesseurs);
+  app.get('/api/getProfesseur/:id', professeurController.getProfesseur);
+  app.delete('/api/deleteProfesseur/:id', professeurController.deleteProfesseur);
+  app.put('/api/editProfesseur/:id', professeurController.editProfesseur);
 };

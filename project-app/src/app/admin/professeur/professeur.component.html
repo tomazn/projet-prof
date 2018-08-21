@@ -1,3 +1,6 @@
-<p>
-  professeur works!
-</p>
+<div *ngIf="Professeur">
+  <p>{{Professeur.nom}}</p>
+  <p>{{Professeur.prenom}}</p>
+  <p *ngIf="Professeur.matiere">{{Professeur.matiere.intitule}}</p>
+  <p *ngIf="Professeur.etablissement">{{Professeur.etablissement.name}}</p>
+</div>

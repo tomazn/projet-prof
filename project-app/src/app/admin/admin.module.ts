@@ -14,6 +14,9 @@ import { EtablissementsService } from '../services/etablissements.service';
 import { MatieresService} from '../services/matieres.service';
 
 import {AdminRoutingModule} from './admin-routing.module';
+import { ProfesseursComponent } from './professeurs/professeurs.component';
+import { AddProfesseurFormComponent } from './add-professeur-form/add-professeur-form.component';
+import { ProfesseursService } from '../services/professeurs.service';
 import { ProfesseurComponent } from './professeur/professeur.component';
 
 @NgModule({
@@ -30,11 +33,14 @@ import { ProfesseurComponent } from './professeur/professeur.component';
     AddEtablissementFormComponent,
     MatieresComponent,
     AddMatiereFormComponent,
+    ProfesseursComponent,
+    AddProfesseurFormComponent,
     ProfesseurComponent
   ],
   providers: [
     EtablissementsService,
-    MatieresService
+    MatieresService,
+    ProfesseursService
   ]
 })
 

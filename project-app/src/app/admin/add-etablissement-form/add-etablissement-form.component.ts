@@ -59,7 +59,7 @@ export class AddEtablissementFormComponent implements OnInit {
 
   buildForm(Etablissement): void {
     this.form = this.fb.group({
-      nom: [Etablissement ? Etablissement.nom : '', Validators.compose([Validators.required, Validators.minLength(3)]) ],
+      name: [Etablissement ? Etablissement.name : '', Validators.compose([Validators.required, Validators.minLength(3)]) ],
       type: [Etablissement ? Etablissement.type : '', Validators.required],
       adresse: [Etablissement ? Etablissement.adresse : '', Validators.compose([Validators.required, Validators.minLength(3)]) ],
       cp: [Etablissement ? Etablissement.cp : '', Validators.compose([
