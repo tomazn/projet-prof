@@ -15,23 +15,23 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddProfesseurFormComponent implements OnInit {
 
-form: FormGroup;
-etablissements: Etablissement[];
-matieres: Matiere[];
-Edit: boolean;
-id: String;
+  form: FormGroup;
+  etablissements: Etablissement[];
+  matieres: Matiere[];
+  Edit: boolean;
+  id: String;
 
-promiseEtablissement: Promise<void>;
-promiseMatiere: Promise<void>;
+  promiseEtablissement: Promise<void>;
+  promiseMatiere: Promise<void>;
 
-  constructor(private fb: FormBuilder, private EtablissementsService: EtablissementsService, 
-    private MatieresService: MatieresService, private professeursService: ProfesseursService, private ActivatedRoute:ActivatedRoute, private Router: Router) { }
+  constructor(private fb: FormBuilder, private EtablissementsService: EtablissementsService,
+    private MatieresService: MatieresService, private professeursService: ProfesseursService, private ActivatedRoute: ActivatedRoute, private Router: Router) { }
 
   ngOnInit() {
     this.id = this.ActivatedRoute.snapshot.params['id'];
-    if(this.id){
+    if (this.id) {
       this.Edit = true;
-    }else{
+    } else {
       this.Edit = false;
     }
     this.initEtablissements();
@@ -39,61 +39,61 @@ promiseMatiere: Promise<void>;
     this.createForm();
   }
 
-  createForm(): void{
+  createForm(): void {
     Promise.all([this.promiseEtablissement, this.promiseMatiere])
-    .then( res => {
-      if(this.Edit){
-        this.professeursService.getProfesseur(this.id)
-        .then(res => {
-           this.buildForm(res);
-        }, error => console.log(error))
-      }else{
-        this.buildForm(new professeur());
-      }
-    })
+      .then(res => {
+        if (this.Edit) {
+          this.professeursService.getProfesseur(this.id)
+            .then(res => {
+              this.buildForm(res);
+            }, error => console.log(error))
+        } else {
+          this.buildForm(new professeur());
+        }
+      })
   }
 
-  initEtablissements(): void{
+  initEtablissements(): void {
     this.promiseEtablissement = this.EtablissementsService.GetEtablissements()
-    .then(res => {
+      .then(res => {
         this.etablissements = res;
-    },
-    error => console.log(error)
-  );
+      },
+        error => console.log(error)
+      );
   }
 
-  initMatieres(): void{
+  initMatieres(): void {
     this.promiseMatiere = this.MatieresService.GetMatieres()
-    .then( res => {
-      this.matieres = res;
-    },
-    error => console.log(error)
-  )
+      .then(res => {
+        this.matieres = res;
+      },
+        error => console.log(error)
+      )
   }
 
-  buildForm(professeur: professeur): void{
+  buildForm(professeur: professeur): void {
     this.form = this.fb.group({
-      nom: [ professeur.nom ? professeur.nom : '', Validators.required],
-      prenom: [ professeur.prenom ? professeur.prenom : '', Validators.required],
-      etablissement: [ professeur.etablissement ? professeur.etablissement : '', Validators.required],
-      matiere: [ professeur.matiere ? professeur.matiere : '', Validators.required]
+      nom: [professeur.nom ? professeur.nom : '', Validators.required],
+      prenom: [professeur.prenom ? professeur.prenom : '', Validators.required],
+      etablissement: [professeur.etablissement ? professeur.etablissement : '', Validators.required],
+      matiere: [professeur.matiere ? professeur.matiere : '', Validators.required]
     })
   }
 
-  submit(value, validate): void{
+  submit(value, validate): void {
     if (!validate) { return; }
-    if(this.Edit){
-      this.professeursService.editProfesseur(this.id,value)
-      .then(() => {
-        this.Router.navigate(['/Admin/Professeurs']);
-      },
-    error => console.log(error))
-    }else{
+    if (this.Edit) {
+      this.professeursService.editProfesseur(this.id, value)
+        .then(() => {
+          this.Router.navigate(['/Admin/Professeurs']);
+        },
+          error => console.log(error))
+    } else {
       this.professeursService.addProfesseur(value)
-      .then(() => {
-        //this.Router.navigate['/Admin/Professeurs'];
-      },
-    error => console.log(error))
+        .then(() => {
+          //this.Router.navigate['/Admin/Professeurs'];
+        },
+          error => console.log(error))
     }
-    }
+  }
 }
