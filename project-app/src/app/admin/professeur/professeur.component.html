@@ -1,27 +1,6 @@
-<app-add-professeur-form></app-add-professeur-form>
-
-<ul *ngIf="Professeurs">
-  <li *ngFor="let professeur of Professeurs">
-    {{professeur.nom}} - {{professeur.prenom}}
-    <br>
-    <ng-container *ngIf="professeur.etablissement; else elseEtablissement">
-      <u>établissement:</u> {{professeur.etablissement.name}}
-    </ng-container>
-    <ng-template #elseEtablissement>
-      Aucun établissement attribué, veuillez modifier le professeur.
-    </ng-template>
-    <br>
-    <ng-container *ngIf="professeur.matiere; else elseMatiere">
-      <u>matière:</u> {{professeur.matiere.intitule}}
-    </ng-container>
-    <ng-template #elseMatiere>
-      Aucune matière attribuée, veuillez modifier le professeur.
-    </ng-template>
-    <br>
-    <button (click)="deleteProfesseur(professeur._id)">Supprimer</button>
-    <hr>
-  </li>
-  <li *ngIf="Professeurs.length <= 0">
-    <p>Aucun professeur.</p>
-  </li>
-</ul>
+<div *ngIf="Professeur">
+  <p>{{Professeur.nom}}</p>
+  <p>{{Professeur.prenom}}</p>
+  <p *ngIf="Professeur.matiere">{{Professeur.matiere.intitule}}</p>
+  <p *ngIf="Professeur.etablissement">{{Professeur.etablissement.name}}</p>
+</div>

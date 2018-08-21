@@ -22,8 +22,23 @@ getProfesseurs(): Promise<professeur> {
   .catch(this.handleError);
 }
 
+getProfesseur(id: String): Promise<professeur>{
+  return this.http.get('/api/getProfesseur/' + id)
+  .map(res => res.json())
+  .toPromise()
+  .then()
+  .catch(this.handleError);
+}
+
 deleteProfesseur(id: String){
   return this.http.delete('/api/deleteProfesseur/' + id)
+      .toPromise()
+      .then()
+      .catch(this.handleError);
+}
+
+editProfesseur(id: String, professeur: professeur){
+  return this.http.put('/api/editProfesseur/' + id, professeur)
       .toPromise()
       .then()
       .catch(this.handleError);

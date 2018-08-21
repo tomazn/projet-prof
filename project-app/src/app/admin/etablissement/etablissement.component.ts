@@ -12,7 +12,7 @@ import { EtablissementsService } from '../../services/etablissements.service';
 })
 export class EtablissementComponent implements OnInit {
 
-  private Etablissement: Etablissement = null
+  Etablissement: Etablissement = null
 
   constructor(private _EtablissementsService: EtablissementsService, private Route: ActivatedRoute) { }
 

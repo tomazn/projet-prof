@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfesseursService } from '../../services/professeurs.service';
 import { professeur } from '../../model/professeur';
+import { ActivatedRoute } from '@angular/router';
+import { ProfesseursService } from '../../services/professeurs.service';
 
 @Component({
   selector: 'app-professeur',
@@ -9,26 +10,16 @@ import { professeur } from '../../model/professeur';
 })
 export class ProfesseurComponent implements OnInit {
 
-  Professeurs: professeur[];
+  Professeur: professeur;
 
-  constructor(private ProfesseursService: ProfesseursService) { }
+  constructor(private Route: ActivatedRoute, private ProfesseursService: ProfesseursService) { }
 
   ngOnInit() {
-    this.getProfesseurs();
-  }
-
-  getProfesseurs(): void{
-      this.ProfesseursService.getProfesseurs()
-      .then(res => {
-        this.Professeurs = res;
-      }, error => console.log(error))
-  }
-
-  deleteProfesseur(id: String): void{
-    this.ProfesseursService.deleteProfesseur(id)
-    .then(() => {
-      this.getProfesseurs();
-    }, error => console.log(error));
+    const id =  this.Route.snapshot.params['id'];
+    this.ProfesseursService.getProfesseur(id).then(
+      data => this.Professeur = data,
+      error => console.log(error),
+    );
   }
 
 }

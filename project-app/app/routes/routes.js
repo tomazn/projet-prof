@@ -42,5 +42,7 @@ module.exports = function (app, db) {
   */
   app.post('/api/addProfesseur', professeurController.addProfesseur);
   app.get('/api/getProfesseurs', professeurController.getProfesseurs);
+  app.get('/api/getProfesseur/:id', professeurController.getProfesseur);
   app.delete('/api/deleteProfesseur/:id', professeurController.deleteProfesseur);
+  app.put('/api/editProfesseur/:id', professeurController.editProfesseur);
 };

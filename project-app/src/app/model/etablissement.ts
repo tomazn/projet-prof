@@ -1,5 +1,5 @@
 export class Etablissement {
-  nom: string;
+  name: string;
   type: string;
   adresse: string;
   cp: number;
