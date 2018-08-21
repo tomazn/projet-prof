@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, Input, Output, EventEmitter} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import { Etablissement} from '../../model/etablissement';
+import { Component, OnInit, Inject, Input, Output, EventEmitter } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Etablissement } from '../../model/etablissement';
 
-import { EtablissementsService} from '../../services/etablissements.service';
+import { EtablissementsService } from '../../services/etablissements.service';
 
 @Component({
   selector: 'app-add-etablissement-form',
@@ -20,7 +20,7 @@ export class AddEtablissementFormComponent implements OnInit {
   @Output() EtablissementAdded = new EventEmitter<boolean>();
 
 
-  constructor(private fb: FormBuilder, private _EtablissementService: EtablissementsService, private Route: ActivatedRoute, private Router: Router) {}
+  constructor(private fb: FormBuilder, private _EtablissementService: EtablissementsService, private Route: ActivatedRoute, private Router: Router) { }
 
   ngOnInit() {
     this.Edit = false;
@@ -49,7 +49,7 @@ export class AddEtablissementFormComponent implements OnInit {
         .catch(err => console.log(err));
     } else {
       this._EtablissementService.addEtablissement(value)
-        .then( () => {
+        .then(() => {
           this.EtablissementAdded.emit(true);
           this.form.reset();
         })
@@ -59,14 +59,14 @@ export class AddEtablissementFormComponent implements OnInit {
 
   buildForm(Etablissement): void {
     this.form = this.fb.group({
-      name: [Etablissement ? Etablissement.name : '', Validators.compose([Validators.required, Validators.minLength(3)]) ],
-      type: [Etablissement ? Etablissement.type : '', Validators.required],
-      adresse: [Etablissement ? Etablissement.adresse : '', Validators.compose([Validators.required, Validators.minLength(3)]) ],
-      cp: [Etablissement ? Etablissement.cp : '', Validators.compose([
+      name: [Etablissement.name ? Etablissement.name : '', Validators.compose([Validators.required, Validators.minLength(3)])],
+      type: [Etablissement.type ? Etablissement.type : '', Validators.required],
+      adresse: [Etablissement.adresse ? Etablissement.adresse : '', Validators.compose([Validators.required, Validators.minLength(3)])],
+      cp: [Etablissement.cp ? Etablissement.cp : '', Validators.compose([
         Validators.required, Validators.minLength(5),
         Validators.maxLength(5),
         Validators.pattern('^(0|[1-9][0-9]*)$')
-      ]) ]
+      ])]
     });
   }
 }
